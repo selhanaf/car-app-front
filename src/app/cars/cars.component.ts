@@ -15,7 +15,7 @@ export class CarsComponent implements OnInit {
     pageSize: 5,
     collectionSize: 0,
     sort: 'asc',
-    order: 'brand',
+    order: 'id',
     page: 0
   }
 
@@ -48,5 +48,16 @@ export class CarsComponent implements OnInit {
       page: 1,
     }
     this.getCars(this.pagination, value)
+  }
+
+  onSortChange(value): void {
+
+    debugger;
+    this.pagination = {
+      ...this.pagination,
+      order: value === this.pagination.order && this.pagination.sort === 'desc' ? 'id' : value,
+      sort: this.pagination.sort === 'asc' && value === this.pagination.order ? 'desc' : 'asc'
+    }
+    this.getCars(this.pagination, this.search)
   }
 }

@@ -1,11 +1,21 @@
 <div class="container">
   <app-search-input [search]="search" (searchChange)="searchChange($event)"></app-search-input>
+
   <table class="table table-striped">
     <thead>
       <tr>
-        <th sortable="brand" scope="col">Brand</th>
-        <th scope="col">Country</th>
-        <th scope="col">Registration</th>
+        <th scope="col" (click)="onSortChange('brand')">
+          Brand
+            <app-table-th [pagination]="pagination" order="brand"></app-table-th>
+        </th>
+        <th scope="col" (click)="onSortChange('country')">
+          Country
+          <app-table-th [pagination]="pagination" order="country"></app-table-th>
+        </th>
+        <th scope="col" (click)="onSortChange('registration')">
+          Registration
+            <app-table-th [pagination]="pagination" order="registration"></app-table-th>
+        </th>
       </tr>
     </thead>
     <tbody>
