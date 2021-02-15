@@ -14,21 +14,30 @@ export class CarsComponent implements OnInit {
     pageSize: 5,
     collectionSize: 0,
     sort: 'asc',
-    order: 'order',
+    order: 'brand',
     page: 0
   }
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.getCars(this.pagination)
+
   }
 
-  getCars(pagination?: PaginationModel) {
-    this.apiService.getCars(pagination).subscribe((data: any)=>{
+  getCars(pagination?: PaginationModel): void {
+    this.apiService.getCars(pagination).subscribe((data: any) => {
       console.log(data);
+      this.pagination = {
+        ...this.pagination,
+        pageSize: data.size,
+        collectionSize: data.totalElmenets
+      }
       this.cars = data.data
 		})
   }
 
+  onPageChange(): void {
+    console.log(this.pagination);
+    this.getCars(this.pagination)
+  }
 }

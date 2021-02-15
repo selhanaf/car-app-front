@@ -11,6 +11,11 @@ export class ApiService {
   constructor(private httpClient: HttpClient) {  }
 
   public getCars(pagination?: PaginationModel){
-		return this.httpClient.get(`${this.BASE_URL}/api/cars`);
+    let params = new HttpParams().set('page', `${pagination.page - 1}`);
+    params = params.set('sort', pagination.sort);
+    params = params.set('order', pagination.order);
+    params = params.set('size', `${pagination.pageSize}`);
+    debugger;
+		return this.httpClient.get(`${this.BASE_URL}/api/cars`, { params: params});
 	}
 }
