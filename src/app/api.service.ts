@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginationModel }from './models/paginationModel'
+import { environment } from "../environments/environment";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private BASE_URL = "http://localhost:8080/carapp";
+  private BASE_URL = environment.baseUrl;
   constructor(private httpClient: HttpClient) {  }
 
   public getCars(pagination: PaginationModel, search?:string){
