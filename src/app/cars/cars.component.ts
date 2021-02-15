@@ -9,26 +9,55 @@ import { PaginationModel } from '../models/paginationModel'
   styleUrls: ['./cars.component.css']
 })
 export class CarsComponent implements OnInit {
+  search: string = null;
   cars : CarModel[]  = []
   pagination : PaginationModel = {
     pageSize: 5,
     collectionSize: 0,
     sort: 'asc',
-    order: 'order',
+    order: 'id',
     page: 0
   }
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.getCars(this.pagination)
+
   }
 
-  getCars(pagination?: PaginationModel) {
-    this.apiService.getCars(pagination).subscribe((data: any)=>{
-      console.log(data);
+  getCars(pagination: PaginationModel, search?: string): void {
+    this.apiService.getCars(pagination, search).subscribe((data: any) => {
+      this.pagination = {
+        ...this.pagination,
+        pageSize: data.size,
+        collectionSize: data.totalElmenets
+      }
       this.cars = data.data
 		})
   }
 
+  onPageChange(): void {
+    this.getCars(this.pagination, this.search)
+  }
+
+  searchChange(value): void {
+    console.log(this.search);
+    this.search = value;
+    this.pagination = {
+      ...this.pagination,
+      page: 1,
+    }
+    this.getCars(this.pagination, value)
+  }
+
+  onSortChange(value): void {
+
+    debugger;
+    this.pagination = {
+      ...this.pagination,
+      order: value === this.pagination.order && this.pagination.sort === 'desc' ? 'id' : value,
+      sort: this.pagination.sort === 'asc' && value === this.pagination.order ? 'desc' : 'asc'
+    }
+    this.getCars(this.pagination, this.search)
+  }
 }
