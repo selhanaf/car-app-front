@@ -21,4 +21,9 @@ export class ApiService {
     }
 		return this.httpClient.get(`${this.BASE_URL}/api/cars`, { params: params});
 	}
+
+  public deleteCar(id: string){
+    debugger;
+    return this.httpClient.delete(`${this.BASE_URL}/api/cars/${id}`);
+  }
 }

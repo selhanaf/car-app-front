@@ -4,6 +4,7 @@ import { CarModel } from '../models/car'
 import { PaginationModel } from '../models/paginationModel'
 import { DeleteModalComponent } from "../delete-modal/delete-modal.component";
 import {MatDialog} from '@angular/material/dialog';
+import {StateService} from '../state.service';
 
 @Component({
   selector: 'app-cars',
@@ -11,6 +12,8 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./cars.component.css']
 })
 export class CarsComponent implements OnInit {
+  username: string;
+
   search: string = null;
   cars : CarModel[]  = []
   pagination : PaginationModel = {
@@ -21,10 +24,19 @@ export class CarsComponent implements OnInit {
     page: 0
   }
 
-  constructor(private apiService: ApiService, public dialog: MatDialog) { }
+  constructor(private apiService: ApiService, public dialog: MatDialog, private state: StateService) { }
 
   ngOnInit(): void {
-
+    this.state.carToRemove.subscribe(car => {
+      if (!car) {
+        this.dialog.closeAll()
+        this.pagination = {
+          ...this.pagination,
+          page: 1,
+        }
+        this.getCars(this.pagination, this.search);
+      }
+    })
   }
 
   getCars(pagination: PaginationModel, search?: string): void {
@@ -63,7 +75,9 @@ export class CarsComponent implements OnInit {
 
   selectCarToRemove(car): void {
     console.log(car);
+    this.state.selectCarToRemove(car)
     this.dialog.open(DeleteModalComponent)
+
   }
 
   selectCarToEdit(car): void {
