@@ -16,6 +16,8 @@
           Registration
             <app-table-th [pagination]="pagination" order="registration"></app-table-th>
         </th>
+        <th scope="col">
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +27,14 @@
         </td>
         <td>{{ car.country }}</td>
         <td>{{ car.registration  }}</td>
+        <td>
+          <button mat-icon-button color="warn" (click)="selectCarToRemove(car)" >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="selectCarToEdit(car)" >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -35,5 +45,4 @@
     (pageChange)="onPageChange()"
   >
   </ngb-pagination>
-
 </div>

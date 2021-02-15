@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service'
 import { CarModel } from '../models/car'
 import { PaginationModel } from '../models/paginationModel'
+import { DeleteModalComponent } from "../delete-modal/delete-modal.component";
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cars',
@@ -19,7 +21,7 @@ export class CarsComponent implements OnInit {
     page: 0
   }
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -51,13 +53,20 @@ export class CarsComponent implements OnInit {
   }
 
   onSortChange(value): void {
-
-    debugger;
     this.pagination = {
       ...this.pagination,
       order: value === this.pagination.order && this.pagination.sort === 'desc' ? 'id' : value,
       sort: this.pagination.sort === 'asc' && value === this.pagination.order ? 'desc' : 'asc'
     }
     this.getCars(this.pagination, this.search)
+  }
+
+  selectCarToRemove(car): void {
+    console.log(car);
+    this.dialog.open(DeleteModalComponent)
+  }
+
+  selectCarToEdit(car): void {
+    console.log(car);
   }
 }
