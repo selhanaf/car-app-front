@@ -11,13 +11,6 @@ export class ApiService {
   constructor(private httpClient: HttpClient) {  }
 
   public getCars(pagination?: PaginationModel){
-    let params = new HttpParams();
-    if (pagination) {
-      for (const [key, value] of Object.entries(pagination)) {
-        params = params.append(key, value)
-      }
-    }
-    debugger;
-		return this.httpClient.get(`${this.BASE_URL}/api/cars`, {params});
+		return this.httpClient.get(`${this.BASE_URL}/api/cars`);
 	}
 }
