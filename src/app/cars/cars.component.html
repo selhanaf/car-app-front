@@ -1,28 +1,59 @@
-<div class="container mt-5">
+<mat-toolbar *ngIf="!loading">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="authorize()"
+    *ngIf="!authorized"
+  >
+    Login
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="logout()"
+    *ngIf="authorized"
+  >
+    Logout
+  </button>
+</mat-toolbar>
 
-<div class="d-flex justify-content-between mb-3">
-  <app-search-input [search]="search" (searchChange)="searchChange($event)"></app-search-input>
-  <button mat-raised-button color="primary" (click)="openCreateModal()">Create New Car</button>
+<div class="container  mt-5" *ngIf="!loading && !authorized">
+  <h1>You are not authorized to see this page. please Log In</h1>
 </div>
-
+<div class="container mt-5" *ngIf="!loading && authorized">
+  <button mat-raised-button color="primary" (click)="authorize()">Login</button>
+  <div class="d-flex justify-content-between mb-3">
+    <app-search-input
+      [search]="search"
+      (searchChange)="searchChange($event)"
+    ></app-search-input>
+    <button mat-raised-button color="primary" (click)="openCreateModal()">
+      Create New Car
+    </button>
+  </div>
 
   <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col" (click)="onSortChange('brand')">
           Brand
-            <app-table-th [pagination]="pagination" order="brand"></app-table-th>
+          <app-table-th [pagination]="pagination" order="brand"></app-table-th>
         </th>
         <th scope="col" (click)="onSortChange('country')">
           Country
-          <app-table-th [pagination]="pagination" order="country"></app-table-th>
+          <app-table-th
+            [pagination]="pagination"
+            order="country"
+          ></app-table-th>
         </th>
         <th scope="col" (click)="onSortChange('registration')">
           Registration
-            <app-table-th [pagination]="pagination" order="registration"></app-table-th>
+          <app-table-th
+            [pagination]="pagination"
+            order="registration"
+          ></app-table-th>
         </th>
-        <th scope="col">
-        </th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -31,12 +62,16 @@
           {{ car.brand }}
         </td>
         <td>{{ car.country }}</td>
-        <td>{{ car.registration  }}</td>
+        <td>{{ car.registration }}</td>
         <td>
-          <button mat-icon-button color="warn" (click)="selectCarToRemove(car)" >
+          <button mat-icon-button color="warn" (click)="selectCarToRemove(car)">
             <mat-icon>delete</mat-icon>
           </button>
-          <button mat-icon-button color="primary" (click)="selectCarToEdit(car)" >
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="selectCarToEdit(car)"
+          >
             <mat-icon>edit</mat-icon>
           </button>
         </td>
