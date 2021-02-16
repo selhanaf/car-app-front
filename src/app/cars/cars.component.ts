@@ -3,6 +3,7 @@ import { ApiService } from '../api.service'
 import { CarModel } from '../models/car'
 import { PaginationModel } from '../models/paginationModel'
 import { DeleteModalComponent } from "../delete-modal/delete-modal.component";
+import { EditCreateModalComponent } from "../edit-create-modal/edit-create-modal.component"
 import {MatDialog} from '@angular/material/dialog';
 import {StateService} from '../state.service';
 
@@ -82,5 +83,6 @@ export class CarsComponent implements OnInit {
 
   selectCarToEdit(car): void {
     console.log(car);
+    this.dialog.open(EditCreateModalComponent)
   }
 }

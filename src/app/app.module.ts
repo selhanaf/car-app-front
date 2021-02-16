@@ -17,8 +17,13 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import { EditCreateModalComponent } from './edit-create-modal/edit-create-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +32,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     CarsComponent,
     SearchInputComponent,
     TableThComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    EditCreateModalComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatIconModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatRippleModule,
+    MatDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
