@@ -30,7 +30,7 @@ export class ApiService {
 	}
 
   public deleteCar(id: string){
-    return this.httpClient.delete(`${this.BASE_URL}/api/cars/${id}`);
+    return this.httpClient.delete(`${this.BASE_URL}/api/cars/${id}`).subscribe(() => this.setRefresh(true));
   }
 
   public createCar(car: CarModel){

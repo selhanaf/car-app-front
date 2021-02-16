@@ -19,9 +19,7 @@ export class DeleteModalComponent implements OnInit {
   }
 
   onDelete() {
-    console.log(this.carToRemove);
-    this.apiService.deleteCar(this.carToRemove.id).subscribe((res)=>{
-    })
+    this.apiService.deleteCar(this.carToRemove.id)
     this.state.selectCarToRemove(null)
   }
 
