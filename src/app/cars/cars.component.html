@@ -21,7 +21,6 @@
   <h1>You are not authorized to see this page. please Log In</h1>
 </div>
 <div class="container mt-5" *ngIf="!loading && authorized">
-  <button mat-raised-button color="primary" (click)="authorize()">Login</button>
   <div class="d-flex justify-content-between mb-3">
     <app-search-input
       [search]="search"

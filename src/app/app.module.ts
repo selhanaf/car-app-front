@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CarsComponent } from './cars/cars.component';
@@ -24,6 +24,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import { EditCreateModalComponent } from './edit-create-modal/edit-create-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+
+import { TokenIneterceptorService } from "./token-ineterceptor.service";
 
 
 @NgModule({
@@ -56,7 +58,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatRippleModule,
     MatDatepickerModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenIneterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

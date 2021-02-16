@@ -45,7 +45,7 @@ export class CarsComponent implements OnInit {
   authorize() {
     this.auth0.authorize({
       redirectUri: 'http://localhost:4200/',
-      responseType: 'token id_token'
+      responseType: 'code token id_token'
     });
   }
 
