@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 import { PaginationModel }from './models/paginationModel'
 import { environment } from "../environments/environment";
 import { CarModel } from './models/car'
@@ -10,7 +11,12 @@ import { CarModel } from './models/car'
 })
 export class ApiService {
   private BASE_URL = environment.baseUrl;
+  private refreshSource = new BehaviorSubject<boolean>(false);
+  refresh = this.refreshSource.asObservable()
+
   constructor(private httpClient: HttpClient) {  }
+
+
 
   public getCars(pagination: PaginationModel, search?:string){
     let params = new HttpParams().set('page', `${pagination.page - 1}`);
@@ -28,10 +34,16 @@ export class ApiService {
   }
 
   public createCar(car: CarModel){
-    this.httpClient.post(`${this.BASE_URL}/api/cars`, car).subscribe(res => console.log(res))
+    this.httpClient.post(`${this.BASE_URL}/api/cars`, car).subscribe(() => this.setRefresh(true))
   }
 
   public updateCar(car: CarModel){
-    this.httpClient.put(`${this.BASE_URL}/api/cars`, car).subscribe(res => console.log(res))
+    this.httpClient.put(`${this.BASE_URL}/api/cars`, car).subscribe(() => this.setRefresh(true))
+  }
+
+  /**
+   * setRefreshrefresh: boolean : void  */
+  public setRefresh(refresh: boolean): void {
+    this.refreshSource.next(refresh)
   }
 }

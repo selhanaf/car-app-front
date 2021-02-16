@@ -38,6 +38,13 @@ export class CarsComponent implements OnInit {
         this.getCars(this.pagination, this.search);
       }
     })
+
+    this.apiService.refresh.subscribe(refresh => {
+      if (refresh) {
+        this.getCars(this.pagination, this.search);
+        this.apiService.setRefresh(false)
+      }
+    })
   }
 
   getCars(pagination: PaginationModel, search?: string): void {

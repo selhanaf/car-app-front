@@ -50,7 +50,7 @@ export class EditCreateModalComponent implements OnInit {
 
   onSubmit(){
     if (this.carToEdit) {
-      this.apiService.createCar(this.carForm.value)
+      this.apiService.updateCar({...this.carToEdit, ...this.carForm.value})
     } else {
       this.apiService.createCar(this.carForm.value)
     }

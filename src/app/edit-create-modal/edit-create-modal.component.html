@@ -19,8 +19,6 @@
       <mat-error *ngIf="carForm.controls['registration'].errors?.required">Registration Required</mat-error>
     </mat-form-field>
   </div>
-  <p>Form value: {{ carForm.value | json }}</p>
-  <p>Form status: {{ carForm.status | json }}</p>
   <div mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-button color="primary"  [disabled]="carForm.invalid">Save</button>
