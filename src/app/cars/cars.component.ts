@@ -83,6 +83,11 @@ export class CarsComponent implements OnInit {
 
   selectCarToEdit(car): void {
     console.log(car);
+    this.state.setlectCarToEdit(car)
+    this.dialog.open(EditCreateModalComponent)
+  }
+
+  openCreateModal() {
     this.dialog.open(EditCreateModalComponent)
   }
 }

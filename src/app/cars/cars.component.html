@@ -1,5 +1,11 @@
-<div class="container">
+<div class="container mt-5">
+
+<div class="d-flex justify-content-between mb-3">
   <app-search-input [search]="search" (searchChange)="searchChange($event)"></app-search-input>
+  <button mat-raised-button color="primary" (click)="openCreateModal()">Create New Car</button>
+</div>
+
+
   <table class="table table-striped">
     <thead>
       <tr>
