@@ -1,0 +1,26 @@
+<form [formGroup]="carForm" novalidate (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>Edit Car</h1>
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill" required>
+      <mat-label>Brand</mat-label>
+      <input matInput formControlName="brand"/>
+      <mat-error *ngIf="carForm.controls['brand'].errors?.required">Brand Required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" required>
+      <mat-label>Country</mat-label>
+      <input matInput  formControlName="country"  (change)="onChange($event)"/>
+      <mat-error *ngIf="carForm.controls['country'].errors?.required">Country Required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" required>
+      <mat-label>Registration</mat-label>
+      <input matInput [matDatepicker]="picker" [max]="tomorrow" formControlName="registration" >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="carForm.controls['registration'].errors?.required">Registration Required</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button color="primary"  [disabled]="carForm.invalid">Save</button>
+  </div>
+</form>

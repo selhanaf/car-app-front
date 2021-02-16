@@ -13,13 +13,27 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 import { TableThComponent } from './table-th/table-th.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+import {MatDialogModule} from '@angular/material/dialog';
+import { EditCreateModalComponent } from './edit-create-modal/edit-create-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CarsComponent,
     SearchInputComponent,
-    TableThComponent
+    TableThComponent,
+    DeleteModalComponent,
+    EditCreateModalComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +45,16 @@ import { TableThComponent } from './table-th/table-th.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     NgbModule,
-    NgxBootstrapIconsModule.forRoot(allIcons)
+    NgxBootstrapIconsModule.forRoot(allIcons),
+    MatIconModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatRippleModule,
+    MatDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

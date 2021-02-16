@@ -1,5 +1,10 @@
-<div class="container">
+<div class="container mt-5">
+
+<div class="d-flex justify-content-between mb-3">
   <app-search-input [search]="search" (searchChange)="searchChange($event)"></app-search-input>
+  <button mat-raised-button color="primary" (click)="openCreateModal()">Create New Car</button>
+</div>
+
 
   <table class="table table-striped">
     <thead>
@@ -16,6 +21,8 @@
           Registration
             <app-table-th [pagination]="pagination" order="registration"></app-table-th>
         </th>
+        <th scope="col">
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +32,14 @@
         </td>
         <td>{{ car.country }}</td>
         <td>{{ car.registration  }}</td>
+        <td>
+          <button mat-icon-button color="warn" (click)="selectCarToRemove(car)" >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="selectCarToEdit(car)" >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -35,5 +50,4 @@
     (pageChange)="onPageChange()"
   >
   </ngb-pagination>
-
 </div>
