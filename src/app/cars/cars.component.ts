@@ -6,6 +6,8 @@ import { DeleteModalComponent } from "../delete-modal/delete-modal.component";
 import { EditCreateModalComponent } from "../edit-create-modal/edit-create-modal.component"
 import {MatDialog} from '@angular/material/dialog';
 import {StateService} from '../state.service';
+import * as auth0 from 'auth0-js';
+import { environment as env } from "src/environments/environment";
 
 @Component({
   selector: 'app-cars',
@@ -14,6 +16,8 @@ import {StateService} from '../state.service';
 })
 export class CarsComponent implements OnInit {
   username: string;
+  loading: boolean = true
+  authorized: boolean = false
 
   search: string = null;
   cars : CarModel[]  = []
@@ -25,9 +29,57 @@ export class CarsComponent implements OnInit {
     page: 0
   }
 
-  constructor(private apiService: ApiService, public dialog: MatDialog, private state: StateService) { }
+  private auth0: auth0.WebAuth;
+  private authOptions: auth0.AuthOptions;
+
+  constructor(private apiService: ApiService, public dialog: MatDialog, private state: StateService) {
+    this.authOptions = {
+      domain: env.auth.domain,
+      clientID: env.auth.clientId
+    };
+
+    // Set-up the authentication flow
+    this.auth0 = new auth0.WebAuth(this.authOptions);
+   }
+
+  authorize() {
+    this.auth0.authorize({
+      redirectUri: env.auth.redirectUri,
+      responseType: 'code token id_token'
+    });
+  }
+
+  private getUserInfo(){
+    this.auth0.checkSession({
+      redirectUri: env.auth.redirectUri,
+      responseType: 'token id_token'
+    }, (err, authResult) => {
+      this.authorized = true
+      this.loading = false
+      if(authResult){
+        localStorage.setItem("idToken", authResult.idToken);
+        localStorage.setItem("accessToken", authResult.accessToken);
+        localStorage.setItem("userId", authResult.idTokenPayload.sub)
+      } else {
+        this.loading = false
+        this.authorized = false
+      }
+    })
+  }
+
+  parseAccessToken() {
+    this.auth0.parseHash((err, authResult) => {
+      this.loading = false
+      if(authResult){
+        localStorage.setItem("idToken", authResult.idToken);
+        localStorage.setItem("accessToken", authResult.accessToken);
+        localStorage.setItem("userId", authResult.idTokenPayload.sub)
+      }
+    });
+  }
 
   ngOnInit(): void {
+    this.parseAccessToken();
     this.state.carToRemove.subscribe(car => {
       if (!car) {
         this.dialog.closeAll()
@@ -45,6 +97,7 @@ export class CarsComponent implements OnInit {
         this.apiService.setRefresh(false)
       }
     })
+    this.getUserInfo()
   }
 
   getCars(pagination: PaginationModel, search?: string): void {
@@ -89,12 +142,16 @@ export class CarsComponent implements OnInit {
   }
 
   selectCarToEdit(car): void {
-    console.log(car);
     this.state.setlectCarToEdit(car)
     this.dialog.open(EditCreateModalComponent)
   }
 
   openCreateModal() {
     this.dialog.open(EditCreateModalComponent)
+  }
+
+  logout(){
+    this.auth0.logout(this.authOptions);
+    this.authorized = false
   }
 }

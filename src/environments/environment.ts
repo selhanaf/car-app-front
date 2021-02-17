@@ -2,9 +2,18 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const baseUrl = 'http://localhost:8080/carapp';
 export const environment = {
   production: false,
-  baseUrl: "http://localhost:8080/carapp",
+  baseUrl,
+  auth: {
+    domain: 'dev-04zom-rc.us.auth0.com',
+    clientId: 'ZBg0YCTgMaEBnCcunLo5zph8l78y0htE',
+    redirectUri: `${window.location.origin}/login`,
+    httpInterceptor: {
+      allowedList: [`${baseUrl}/*`],
+    },
+  },
 };
 
 /*
