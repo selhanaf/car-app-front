@@ -44,14 +44,14 @@ export class CarsComponent implements OnInit {
 
   authorize() {
     this.auth0.authorize({
-      redirectUri: 'http://localhost:4200/',
+      redirectUri: env.auth.redirectUri,
       responseType: 'code token id_token'
     });
   }
 
   private getUserInfo(){
     this.auth0.checkSession({
-      redirectUri: 'http://localhost:4200/',
+      redirectUri: env.auth.redirectUri,
       responseType: 'token id_token'
     }, (err, authResult) => {
       this.authorized = true
